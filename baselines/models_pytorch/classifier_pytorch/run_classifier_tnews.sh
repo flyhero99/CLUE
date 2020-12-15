@@ -5,10 +5,10 @@
 # @Last Modified time: 2020-01-01 11:46:07
 
 TASK_NAME="tnews"
-MODEL_NAME="bert-base-chinese"
+MODEL_NAME="chinese_roberta_wwm_large_ext_pytorch"
 CURRENT_DIR=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 export CUDA_VISIBLE_DEVICES="0"
-export BERT_PRETRAINED_MODELS_DIR=$CURRENT_DIR/prev_trained_model
+export BERT_PRETRAINED_MODELS_DIR=$CURRENT_DIR/models/chinese-roberta-wwm-ext
 export BERT_WWM_DIR=$BERT_PRETRAINED_MODELS_DIR/$MODEL_NAME
 export GLUE_DATA_DIR=$CURRENT_DIR/CLUEdatasets
 
@@ -45,7 +45,7 @@ echo "Start running..."
 if [ $# == 0 ]; then
     python run_classifier.py \
       --model_type=bert \
-      --model_name_or_path=$MODEL_NAME \
+      --model_name_or_path=$BERT_PRETRAINED_MODELS_DIR \
       --task_name=$TASK_NAME \
       --do_train \
       --do_eval \
@@ -65,7 +65,7 @@ elif [ $1 == "predict" ]; then
     echo "Start predict..."
     python run_classifier.py \
       --model_type=bert \
-      --model_name_or_path=$MODEL_NAME \
+      --model_name_or_path=$BERT_PRETRAINED_MODELS_DIR \
       --task_name=$TASK_NAME \
       --do_predict \
       --do_lower_case \
